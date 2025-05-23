@@ -17,7 +17,6 @@ export default function Dashboard() {
         .catch(err => console.error('Fehler beim Laden:', err));
     }
   }, [authenticated]);
-  ];
 
   const handleLogin = () => {
     if (username === 'philipp' && password === 'sicherespasswort') {
