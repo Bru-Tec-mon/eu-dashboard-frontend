@@ -17,9 +17,6 @@ export default function Dashboard() {
         .catch(err => console.error('Fehler beim Laden:', err));
     }
   }, [authenticated]);
-    { date: '2.3. April 2025', group: 'IXIM', source: 'consilium.europa.eu' },
-    { date: '21. März 2025', group: 'COM Prüm Expert Group', source: 'eur-lex.europaa.eu' },
-    { date: '7. März 2025', group: 'CATS', source: 'eur lex.europa.eu' }
   ];
 
   const handleLogin = () => {
