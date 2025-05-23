@@ -1,14 +1,44 @@
 import { useState, useEffect } from 'react';
-function Card({ children, className = '' }) {
-  return <div className={`bg-gray-800 rounded-xl shadow p-4 ${className}`}>{children}</div>;
+function Card({ children, className = '', style = {} }) {
+  return (
+    <div
+      style={{
+        background: '#222',
+        borderRadius: 16,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+        padding: 16,
+        marginBottom: 0,
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
 }
 
-function CardContent({ children, className = '' }) {
-  return <div className={className}>{children}</div>;
+function CardContent({ children, className = '', style = {} }) {
+  return <div style={{ ...style }}>{children}</div>;
 }
 
-function Button({ children, className = '', ...props }) {
-  return <button className={`bg-blue-600 text-white px-4 py-2 rounded ${className}`} {...props}>{children}</button>;
+function Button({ children, className = '', style = {}, ...props }) {
+  return (
+    <button
+      style={{
+        background: '#2563eb',
+        color: 'white',
+        padding: '8px 16px',
+        borderRadius: 6,
+        border: 'none',
+        cursor: 'pointer',
+        fontSize: 16,
+        width: style.width,
+        ...style,
+      }}
+      {...props}
+    >
+      {children}
+    </button>
+  );
 }
 
 export default function Dashboard() {
@@ -37,76 +67,182 @@ export default function Dashboard() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="bg-gray-800 p-8 rounded-xl w-96 space-y-4">
-          <h1 className="text-white text-xl font-bold mb-4">Login</h1>
+      <div
+        style={{
+          minHeight: '100vh',
+          background: '#18181b',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            background: '#222',
+            padding: 32,
+            borderRadius: 16,
+            width: 384,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
+          }}
+        >
+          <h1 style={{ color: 'white', fontSize: 24, fontWeight: 'bold', marginBottom: 16 }}>Login</h1>
           <input
-            className="w-full px-4 py-2 rounded bg-gray-700 text-white"
+            style={{
+              width: '100%',
+              padding: '8px 16px',
+              borderRadius: 6,
+              background: '#333',
+              color: 'white',
+              border: '1px solid #444',
+              marginBottom: 0,
+              fontSize: 16,
+            }}
             placeholder="Benutzername"
             value={username}
             onChange={e => setUsername(e.target.value)}
           />
           <input
             type="password"
-            className="w-full px-4 py-2 rounded bg-gray-700 text-white"
+            style={{
+              width: '100%',
+              padding: '8px 16px',
+              borderRadius: 6,
+              background: '#333',
+              color: 'white',
+              border: '1px solid #444',
+              marginBottom: 0,
+              fontSize: 16,
+            }}
             placeholder="Passwort"
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
-          <Button className="w-full" onClick={handleLogin}>Login</Button>
+          <Button style={{ width: '100%' }} onClick={handleLogin}>Login</Button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <header className="flex justify-between items-center mb-6">
-        <div className="flex items-center space-x-2">
-          <span className="text-xl font-bold">🇨🇭 🇪🇺 EU Monitoring Dashboard</span>
+    <div
+      style={{
+        minHeight: '100vh',
+        background: '#18181b',
+        color: 'white',
+        padding: 24,
+      }}
+    >
+      <header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 24,
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 22, fontWeight: 'bold' }}>🇨🇭 🇪🇺 EU Monitoring Dashboard</span>
         </div>
-        <div className="relative">
-          <img src="/avatar.jpg" alt="Philipp Rappo" className="h-10 w-10 rounded-full" />
-          <span className="absolute -top-1 -right-1 bg-red-600 text-xs rounded-full px-2">3</span>
+        <div style={{ position: 'relative', display: 'inline-block' }}>
+          <img
+            src="/avatar.jpg"
+            alt="Philipp Rappo"
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: '50%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+          />
+          <span
+            style={{
+              position: 'absolute',
+              top: -8,
+              right: -8,
+              background: '#dc2626',
+              color: 'white',
+              fontSize: 12,
+              borderRadius: 12,
+              padding: '2px 8px',
+              fontWeight: 600,
+              lineHeight: 1,
+            }}
+          >
+            3
+          </span>
         </div>
       </header>
 
-      <main className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <main
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          gap: 24,
+        }}
+      >
         <Card>
-          <CardContent className="p-4">
-            <h2 className="text-lg font-semibold mb-2">Nächste Sitzungen</h2>
-            <p className="text-2xl">27. Juni 2025</p>
+          <CardContent>
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>Nächste Sitzungen</h2>
+            <p style={{ fontSize: 26, margin: 0 }}>27. Juni 2025</p>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-4">
-            <h2 className="text-lg font-semibold mb-2">Schlüsselwort-Überwachung</h2>
-            <div className="flex flex-wrap gap-2">
+          <CardContent>
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>Schlüsselwort-Überwachung</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {keywords.map((kw, i) => (
-                <span key={i} className="bg-blue-700 px-3 py-1 rounded-full text-sm">{kw}</span>
+                <span
+                  key={i}
+                  style={{
+                    background: '#1d4ed8',
+                    padding: '4px 12px',
+                    borderRadius: 999,
+                    fontSize: 14,
+                    color: 'white',
+                    display: 'inline-block',
+                  }}
+                >
+                  {kw}
+                </span>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        <Card className="col-span-1 md:col-span-2">
-          <CardContent className="p-4">
-            <h2 className="text-lg font-semibold mb-4">Übereinstimmende EU-Dokumente</h2>
-            <table className="w-full text-left">
+        <Card
+          style={{
+            gridColumn: '1 / -1',
+          }}
+        >
+          <CardContent>
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>Übereinstimmende EU-Dokumente</h2>
+            <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
-                  <th className="pb-2">Datum</th>
-                  <th className="pb-2">Gruppe</th>
-                  <th className="pb-2">Quelle</th>
+                  <th style={{ paddingBottom: 8 }}>Datum</th>
+                  <th style={{ paddingBottom: 8 }}>Gruppe</th>
+                  <th style={{ paddingBottom: 8 }}>Quelle</th>
                 </tr>
               </thead>
               <tbody>
                 {matches.map((m, i) => (
-                  <tr key={i} className="border-t border-gray-700">
-                    <td className="py-2">{m.date}</td>
-                    <td className="py-2">{m.group}</td>
-                    <td className="py-2 text-blue-400 underline cursor-pointer">{m.source}</td>
+                  <tr key={i} style={{ borderTop: '1px solid #374151' }}>
+                    <td style={{ padding: '8px 0' }}>{m.date}</td>
+                    <td style={{ padding: '8px 0' }}>{m.group}</td>
+                    <td
+                      style={{
+                        padding: '8px 0',
+                        color: '#60a5fa',
+                        textDecoration: 'underline',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {m.source}
+                    </td>
                   </tr>
                 ))}
               </tbody>
