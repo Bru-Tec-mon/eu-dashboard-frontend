@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
@@ -7,8 +7,16 @@ export default function Dashboard() {
   const [authenticated, setAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [matches, setMatches] = useState([]);
 
-  const meetings = [
+  useEffect(() => {
+    if (authenticated) {
+      fetch('https://eu-dashboard-backend.onrender.com/api/matches')
+        .then(res => res.json())
+        .then(data => setMatches(data))
+        .catch(err => console.error('Fehler beim Laden:', err));
+    }
+  }, [authenticated]);
     { date: '2.3. April 2025', group: 'IXIM', source: 'consilium.europa.eu' },
     { date: '21. März 2025', group: 'COM Prüm Expert Group', source: 'eur-lex.europaa.eu' },
     { date: '7. März 2025', group: 'CATS', source: 'eur lex.europa.eu' }
@@ -89,7 +97,7 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {meetings.map((m, i) => (
+                {matches.map((m, i) => (
                   <tr key={i} className="border-t border-gray-700">
                     <td className="py-2">{m.date}</td>
                     <td className="py-2">{m.group}</td>
