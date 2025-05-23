@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export default function Dashboard() {
   const [authenticated, setAuthenticated] = useState(false);
